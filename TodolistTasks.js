@@ -1,24 +1,23 @@
 import React from 'react';
-import {StyleSheet,TextInput, Text, View} from 'react-native';
-import { useSelector} from "react-redux";
+import {StyleSheet, TextInput, Text, View} from 'react-native';
+import {useSelector} from "react-redux";
+import TodoListTask from "./TodolistTask";
 
-export default function App(props) {
+class TodoListTasks extends React.Component {
+    render = () => {
 
-  return (
-      <View style={styles.container}>
+        let taskElement = this.props.tasks
+            .map((task, i) => <TodoListTask key={i} changeStatus={this.props.changeStatus}
+                                            changeTitle={this.props.changeTitle}
+                                            task={task}/>)
 
-          {props.id}
+        return (
+            <View>
+                {taskElement}
+            </View>
 
-
-      </View>
-  );
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default TodoListTasks;

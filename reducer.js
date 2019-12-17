@@ -8,20 +8,25 @@ export const CHANGE_TASK = 'src/Todolist/CHANGE-TASK'
 
 const initialState = {
     todolists: [
-        {"id":0,"title":"wdfecf",
-            tasks:[{"id":0,"title":"er","isDone":false,"priority":"low"},
-                {"id":1,"title":"11","isDone":false,"priority":"low"},
-                {"id":2,"title":"erf","isDone":false,"priority":"low"}],
-            filterValue:"All"},
-        {"id":1,"title":"refref",
-            tasks:[{"id":0,"title":"erf","isDone":false,"priority":"low"},
-                {"id":1,"title":"erf","isDone":false,"priority":"low"},
-                {"id":2,"title":"gbgb","isDone":false,"priority":"low"}],
-            filterValue:"All"},
-        {"id":2,"title":"rfre",
-        tasks:[{"id":0,"title":"rf","isDone":false,"priority":"low"}],
-            filterValue:"All"},
-        {"id":3,"title":"3tf3", tasks: [], filterValue:"All"}
+        {"id":0,"title":"React"},
+        {"id":1,"title":"Redux"},
+        {"id":2,"title":"CSS"},
+        {"id":3,"title":"HTML"},
+        // "JS", "React", "CSS", "HTML"
+        // {"id":0,"title":"wdfecf",
+        //     tasks:[{"id":0,"title":"er","isDone":false,"priority":"low"},
+        //         {"id":1,"title":"11","isDone":false,"priority":"low"},
+        //         {"id":2,"title":"erf","isDone":false,"priority":"low"}],
+        //     filterValue:"All"},
+        // {"id":1,"title":"refref",
+        //     tasks:[{"id":0,"title":"erf","isDone":false,"priority":"low"},
+        //         {"id":1,"title":"erf","isDone":false,"priority":"low"},
+        //         {"id":2,"title":"gbgb","isDone":false,"priority":"low"}],
+        //     filterValue:"All"},
+        // {"id":2,"title":"rfre",
+        // tasks:[{"id":0,"title":"rf","isDone":false,"priority":"low"}],
+        //     filterValue:"All"},
+        // {"id":3,"title":"3tf3", tasks: [], filterValue:"All"}
     ]
 }
 
@@ -29,7 +34,7 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TODOLIST:
             return {
-                ...state, todolists: [...state.todolists, action.newTodolist]
+                ...state, todolists: [...state.todolists, action.value]
             }
             case DEL_TODOLIST:
             return {
@@ -90,8 +95,8 @@ const reducer = (state = initialState, action) => {
     return state;
 }
 
-export const addTodolistAC = (newTodolist) => {
-    return {type: ADD_TODOLIST,  newTodolist}
+export const addTodolistAC = (value) => {
+    return {type: ADD_TODOLIST,  value}
 }
 export const addTaskAC = ( newTask, todolistId) => {
     return {type: ADD_TASK,

@@ -4,43 +4,45 @@ import {CheckBox} from 'react-native-elements'
 import Button from "react-native-button";
 
 
-class TodoListHeader extends React.Component {
-    constructor(props) {
-        super(props);
-        this.newTaskTitleRef = React.createRef();
-    }
-
-    onAddTaskClick = () => {
-        let newText = this.newTaskTitleRef.current.value;
-
-        this.newTaskTitleRef.current.value = '';
-        this.props.onAddTask(newText)
-    };
-
+class TodoListFooter extends React.Component {
     render = () => {
         return (
-            <View>
-                <Text>What to Learn</Text>
-                            <TextInput ref={this.newTaskTitleRef}  type="text" placeholder="New task name"/>
-                            <Button onClick={this.onAddTaskClick}>Add</Button>
+             <View style={styles.buttonValue}>
+                        <Button
+                            style={[styles.button, (this.props.filterValue === "All") && styles.activeButton]}
+                            onPress={()=> this.props.changeFilter("All")}>All</Button>
+                        <Button
+                            style={[styles.button, (this.props.filterValue === "Completed") && styles.activeButton]}
+                            onPress={()=> this.props.changeFilter("Completed")}>Completed</Button>
+                        <Button
+                            style={[styles.button, (this.props.filterValue === "Active") && styles.activeButton]}
+                            onPress={()=> this.props.changeFilter("Active")} >Active</Button>
                     </View>
-        );
+                 );
     }
 }
 
-export default TodoListHeader;
+export default TodoListFooter;
 
-// const styles = StyleSheet.create({
-//     tasks: {
-//         // flex: 1,
-//         backgroundColor: '#fff',
-//         // alignItems: 'center',
-//         // justifyContent: 'center',
-//         flexDirection: 'row'
-//     },
-//     valueText: {
-//         fontSize: 20,
-//         fontWeight: 'bold',
-//         color: 'black',
-//     },
-// });
+
+const styles = StyleSheet.create({
+
+    button: {
+        width: 120,
+        margin: 2,
+        padding: 5,
+        borderRadius: 3,
+        borderWidth: 0.5,
+        borderColor: '#68fdff',
+
+},
+activeButton: {
+    borderColor: "#0008ff",
+        borderWidth: 2,
+},
+    buttonValue: {
+        // alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
+},
+});
