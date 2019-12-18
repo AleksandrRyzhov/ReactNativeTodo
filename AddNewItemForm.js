@@ -1,24 +1,23 @@
 import React from 'react';
 import {StyleSheet, TextInput, Text, View} from 'react-native';
-import {CheckBox} from 'react-native-elements'
 import Button from "react-native-button";
 
 
-class TodoListHeader extends React.Component {
+class AddNewItemForm extends React.Component {
 
     state = {
         error: false,
         input: ""
     }
 
-    onAddTaskClick = () => {
+    onAddItem = () => {
         let newText = this.state.input;
                this.setState({input: ""});
         if (this.state.input === "") {
             this.setState({error: true})
         } else {
             this.setState({error: false})
-            this.props.addTask(newText)
+            this.props.addItem(newText)
             this.state.input = ''
         }
 
@@ -33,15 +32,15 @@ class TodoListHeader extends React.Component {
                         style={[styles.input, (this.state.error === true) && styles.errorInput]}
                         value={this.state.input}
                                onChangeText={(text) => this.setState({input: text, error: false})}
-                               type="text" placeholder="New task name"/>
-                    <Button style={styles.button} onPress={this.onAddTaskClick}>Add</Button>
+                               type="text" placeholder="Add new item"/>
+                    <Button style={styles.button} onPress={this.onAddItem}>Add</Button>
                 </View>
                     </View>
         );
     }
 }
 
-export default TodoListHeader;
+export default AddNewItemForm;
 
 const styles = StyleSheet.create({
     taskValue: {

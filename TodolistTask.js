@@ -22,18 +22,32 @@ class TodoListTask extends React.Component {
         this.props.changeStatus(this.props.task.id, !this.props.task.isDone)
     }
 
+    onDelTask=()=> {
+        this.props.onDelTask(this.props.task.id)
+    }
+
     render = () => {
         return (
+
             <View style={styles.tasks}>
+
                 <CheckBox
                     onPress={this.onIsDoneChanged}
                     // title='Click Here'
+                    size={16}
                     checked={this.props.task.isDone}/>
                 <View>
-                    {!this.state.editMode ?  <Text onPress={this.activateEditMode}
-                                         style={[styles.valueText, (this.props.task.isDone === true) && styles.checkedValueTrue]}>
+                    {!this.state.editMode ?
+                        <View>
+                        <Text onPress={this.activateEditMode}
+                              style={[styles.valueText, (this.props.task.isDone === true) && styles.checkedValueTrue]}>
                         {this.props.task.id} - {this.props.task.title}, priority: {this.props.task.priority}
-                    </Text> : <View style={styles.inputSave}><TextInput style={styles.inputTitle} autoFocus={true} onChangeText={(title)=>this.setState({title})} >{this.props.task.title}</TextInput>
+                    </Text>
+                        <Button onPress={this.onDelTask}>X</Button></View>
+                        : <View style={styles.inputSave}>
+                            <TextInput style={styles.inputTitle} autoFocus={true}
+                                       onChangeText={(title)=>this.setState({title})} >
+                                {this.props.task.title}</TextInput>
                         <Button onPress={this.deactivateEditMode}>Save</Button></View>}
 
                 </View>
@@ -76,7 +90,7 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         margin: 1,
         padding: 1,
 

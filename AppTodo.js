@@ -1,48 +1,59 @@
 import React from 'react';
-import {StyleSheet, TextInput, Dimensions, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, TextInput, Text, View} from 'react-native';
 import TodoList from "./TodoList";
+import AddNewItemForm from "./AddNewItemForm";
+import {connect} from "react-redux";
+import {addTodolistAC} from "./reducer";
 
-const { height } = Dimensions.get('window');
 
 class AppTodo extends React.Component {
-    state = {
-        // We don't know the size of the content initially, and the probably won't instantly try to scroll, so set the initial content height to 0
-        screenHeight: 0,
-    };
 
-    onContentSizeChange = (contentWidth, contentHeight) => {
-        // Save the content height in state
-        this.setState({ screenHeight: contentHeight });
-    };
+    nextTodolistId = 0;
 
-
-
+    addTodolist = (newText)=> {
+        let newTodolist = {id: this.nextTodolistId, title: newText, tasks: []};
+        this.nextTodolistId++
+        this.props.addTodolist(newTodolist)
+    }
     render = () => {
-        const scrollEnabled = this.state.screenHeight > height;
+        const todolists = this.props.todolists.map(tl => <TodoList id={tl.id} title={tl.title} tasks={tl.tasks}/>)
         return (
-            <View>
-                <ScrollView
-                    style={{ flex: 1 }}
-                    contentContainerStyle={styles.scrollview}
-                    scrollEnabled={scrollEnabled}
-                    onContentSizeChange={this.onContentSizeChange}
-                >
-                    <TodoList />
-                    <TodoList />
-                </ScrollView>
-
+            <View style={styles.container}>
+                <View>
+                    <AddNewItemForm addItem={this.addTodolist}/>
+                </View>
+                <View>
+                    {todolists}
+                </View>
             </View>
-                   )
+        )
     }
 }
 
-export default AppTodo;
+const mapStateToProps = (state) => {
+    return {
+        todolists: state.todolists
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTodolist: (newTodolist) => {
+            const action = addTodolistAC(newTodolist)
+            dispatch(action)
+        }
+    }
+}
+
+const ConnectedAppTodo = connect(mapStateToProps, mapDispatchToProps)(AppTodo);
+export default ConnectedAppTodo;
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fffbff',
-        // alignItems: 'center',
+        alignItems: 'center',
         alignSelf: 'center',
         // justifyContent: 'center',
         flexDirection: 'column',
