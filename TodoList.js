@@ -4,7 +4,7 @@ import TodoListTasks from "./TodolistTasks";
 import AddNewItemForm from "./AddNewItemForm";
 import TodoListFooter from "./TodolistFooter ";
 import TodoListTitle from "./TodoListTitle";
-import {addTaskAC, addTodolistAC, delTaskAC, delTodolistAC} from "./reducer";
+import {addTaskAC, addTodolistAC, changeTaskAC, delTaskAC, delTodolistAC} from "./reducer";
 import {connect} from "react-redux";
 
 
@@ -14,10 +14,7 @@ class TodoList extends React.Component {
     nextTaskId = 0;
 
     state = {
-        tasks: [
-            {id: 0, title: 'JS', isDone: false, priority: "high"},
-                    ],
-        filterValue: "All"
+         filterValue: "All"
     }
 
 
@@ -29,23 +26,13 @@ class TodoList extends React.Component {
 
     addTask = (newText)=>{
         let newTask = {id: this.nextTaskId, title: newText, isDone: false, priority: "high"};
-        // let newTasks = [...this.state.tasks, newTask];
         this.nextTaskId++
         this.props.addTask(this.props.id, newTask)
     }
 
     changeTask = (taskId, obj)=> {
-        let newTasks = this.state.tasks.map(t => {
-            if (t.id !== taskId) {
-                return t
-            }
-            else {
-                return {...t, ...obj}
-            }}
-        )
-        this.setState({
-            tasks: newTasks
-        })
+
+        this.props.changeTask(taskId, obj, this.props.id)
     };
 
     changeStatus = (taskId, isDone)=> {
@@ -93,11 +80,7 @@ class TodoList extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        todolists: state.todolists
-    }
-}
+
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -112,11 +95,15 @@ const mapDispatchToProps = (dispatch) => {
         addTask: (todolistId, newTask) => {
             const action = addTaskAC(todolistId, newTask)
             dispatch(action)
+        },
+        changeTask: (taskId, obj, todolistId) => {
+            const action = changeTaskAC(taskId, obj, todolistId)
+            dispatch(action)
         }
     }
 }
 
-const ConnectedTodoList = connect(mapStateToProps, mapDispatchToProps)(TodoList);
+const ConnectedTodoList = connect(null, mapDispatchToProps)(TodoList);
 export default ConnectedTodoList;
 
 const styles = StyleSheet.create({

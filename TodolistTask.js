@@ -38,12 +38,12 @@ class TodoListTask extends React.Component {
                     checked={this.props.task.isDone}/>
                 <View>
                     {!this.state.editMode ?
-                        <View>
+                        <View style={styles.inputSave}>
                         <Text onPress={this.activateEditMode}
                               style={[styles.valueText, (this.props.task.isDone === true) && styles.checkedValueTrue]}>
-                        {this.props.task.id} - {this.props.task.title}, priority: {this.props.task.priority}
+                        {this.props.task.title}, priority: {this.props.task.priority}
                     </Text>
-                        <Button onPress={this.onDelTask}>X</Button></View>
+                        <Button onPress={this.onDelTask}>Del</Button></View>
                         : <View style={styles.inputSave}>
                             <TextInput style={styles.inputTitle} autoFocus={true}
                                        onChangeText={(title)=>this.setState({title})} >
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
         // flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        // justifyContent: 'center',
+        justifyContent: 'center',
+        // alignSelf: 'center',
         flexDirection: 'row',
         margin: 1,
         padding: 1,
@@ -89,8 +90,9 @@ const styles = StyleSheet.create({
         // fontSize: 20,
         // fontWeight: 'bold',
         alignItems: 'center',
+        // alignSelf: 'center',
         flexDirection: 'row',
-        // justifyContent: 'space-between',
+        justifyContent: 'space-between',
         margin: 1,
         padding: 1,
 

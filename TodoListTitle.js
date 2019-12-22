@@ -12,9 +12,9 @@ class TodoListTitle extends React.Component {
 
       render = () => {
         return (
-            <View>
+            <View style={styles.inputSave}>
                 <Text style={styles.nameTodo}>{this.props.title}</Text>
-                <Button onPress={this.onDelTodolist}>X</Button>
+                <Button onPress={this.onDelTodolist}>Del</Button>
                     </View>
         );
     }
@@ -28,6 +28,17 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         fontSize: 20,
         color: 'black',
+        padding: 1,
+    },
+    inputSave: {
+        // width: 300,
+        // flex: 1,
+        // fontSize: 20,
+        // fontWeight: 'bold',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        margin: 1,
         padding: 1,
     },
 });

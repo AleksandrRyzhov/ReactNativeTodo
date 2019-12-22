@@ -3,12 +3,14 @@ import {StyleSheet, TextInput, Text, View} from 'react-native';
 import TodoList from "./TodoList";
 import AddNewItemForm from "./AddNewItemForm";
 import {connect} from "react-redux";
-import {addTodolistAC} from "./reducer";
+import {addTodolistAC, setTodolistsAC} from "./reducer";
 
 
 class AppTodo extends React.Component {
 
     nextTodolistId = 0;
+
+
 
     addTodolist = (newText)=> {
         let newTodolist = {id: this.nextTodolistId, title: newText, tasks: []};
@@ -17,15 +19,18 @@ class AppTodo extends React.Component {
     }
     render = () => {
         const todolists = this.props.todolists.map(tl => <TodoList id={tl.id} title={tl.title} tasks={tl.tasks}/>)
+
         return (
-            <View style={styles.container}>
-                <View>
-                    <AddNewItemForm addItem={this.addTodolist}/>
+
+                <View style={styles.container}>
+                    <View>
+                        <AddNewItemForm addItem={this.addTodolist}/>
+                    </View>
+                    <View>
+                        {todolists}
+                    </View>
                 </View>
-                <View>
-                    {todolists}
-                </View>
-            </View>
+
         )
     }
 }
@@ -41,7 +46,8 @@ const mapDispatchToProps = (dispatch) => {
         addTodolist: (newTodolist) => {
             const action = addTodolistAC(newTodolist)
             dispatch(action)
-        }
+        },
+
     }
 }
 
